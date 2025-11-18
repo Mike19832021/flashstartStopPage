@@ -1,0 +1,5 @@
+{
+  "name": "Página de Bloqueo de Filtro de Internet",
+  "description": "Una página de bloqueo moderna y dinámica para un filtro de internet que muestra información basada en el perfil del usuario.",
+  "requestFramePermissions": []
+}

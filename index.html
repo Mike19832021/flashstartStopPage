@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acceso Restringido</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    @import url('https://rsms.me/inter/inter.css');
+  </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-slate-900">
+  <main class="relative min-h-screen w-full flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-900 overflow-hidden">
+    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+    <div class="absolute top-0 left-0 -mt-40 -ml-40 w-96 h-96 bg-indigo-500 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob"></div>
+    <div class="absolute bottom-0 right-0 -mb-40 -mr-40 w-96 h-96 bg-purple-500 rounded-full mix-blend-screen filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+    
+    <div class="relative z-10 bg-white/80 backdrop-blur-md p-8 sm:p-12 rounded-2xl shadow-2xl w-full max-w-2xl text-center border border-white/20">
+      <div class="mx-auto mb-6 h-24 w-24 md:h-28 md:w-28 flex items-center justify-center rounded-full bg-red-100 shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 md:h-20 md:w-20 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+        </svg>
+      </div>
+      
+      <div id="profile-badge-container" class="-mt-4 mb-6">
+        <span class="inline-block bg-indigo-100 text-indigo-800 text-base font-bold px-4 py-1.5 rounded-full shadow-sm">
+          Perfil: <span id="profile-name"></span>
+        </span>
+      </div>
+      
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-800 mb-4 tracking-tight">
+        Acceso Denegado
+      </h1>
+      
+      <p id="profile-message" class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-lg mx-auto"></p>
+    </div>
+
+    <footer class="absolute bottom-6 left-0 right-0 text-center text-white/50 text-sm z-10">
+      <p>Sistema de Filtrado y Protección de Contenido AyA</p>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // All profile data is stored here
+      const PROFILES = {
+        'restringido': {
+          title: 'Perfil Restringido',
+          message: '',
+        },
+        'avanzado': {
+          title: 'Perfil Avanzado',
+          message: '',
+        },
+        'gerentes': {
+          title: 'Perfil Gerentes',
+          message: '',
+        },
+        'socialmedia': {
+          title: 'Perfil Social Media',
+          message: '',
+        },
+        'transicion': {
+          title: 'Perfil de Transición',
+          message: '',
+        },
+        'default': {
+            title: 'Acceso Denegado',
+            message: '',
+        }
+      };
+
+      const getProfileDisplayName = (key) => {
+          switch (key) {
+              case 'restringido': return 'Restringido';
+              case 'avanzado': return 'Avanzado';
+              case 'gerentes': return 'Gerentes';
+              case 'socialmedia': return 'Social Media';
+              case 'transicion': return 'Transición';
+              case 'default': return 'No Especificado';
+              default: return '';
+          }
+      };
+
+      // Get DOM elements to update
+      const profileNameEl = document.getElementById('profile-name');
+      const profileMessageEl = document.getElementById('profile-message');
+      
+      // Get profile key from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const keyFromUrl = urlParams.get('profile');
+
+      let currentProfileKey = 'restringido'; // Default profile
+
+      // Check if the key from the URL is valid
+      if (keyFromUrl && PROFILES[keyFromUrl]) {
+        currentProfileKey = keyFromUrl;
+      }
+      
+      const profileData = PROFILES[currentProfileKey];
+      const displayName = getProfileDisplayName(currentProfileKey);
+
+      // Update the page content
+      if (profileNameEl) {
+        profileNameEl.textContent = displayName;
+      }
+      if (profileMessageEl) {
+        profileMessageEl.textContent = profileData.message;
+      }
+    });
+  </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
